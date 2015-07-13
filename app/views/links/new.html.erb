@@ -1,6 +1,7 @@
 <h1>Create new link</h1>
+<p><%= link_to('back home', root_path)%></p>
 <%= form_for @link, url: {action: "create"} do |f| %>
-  <%= f.text_field :title %>
-  <%= f.text_field :url %>
+  Title: <%= f.text_field :title %><br />
+  Url: <%= f.text_field :url %><br />
   <%= f.submit "Create" %>
 <% end %>
