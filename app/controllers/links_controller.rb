@@ -1,6 +1,7 @@
 class LinksController < ApplicationController
 
   before_action :set_link, only: [:edit, :update, :destroy]
+  before_action :set_user, only: [:create]
 
   def index
     @links = Link.all
@@ -11,7 +12,8 @@ class LinksController < ApplicationController
   end
 
   def create
-    @link = Link.create(link_params)
+    @link = @user.links.build(link_params)
+    @link.save
     redirect_to root_path
   end
 
@@ -36,6 +38,10 @@ class LinksController < ApplicationController
 
   def set_link
     @link = Link.find(params[:id])
+  end
+
+  def set_user
+    @user = current_user
   end
 
 end
