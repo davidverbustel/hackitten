@@ -1,5 +1,13 @@
 <h1>Meow</h1>
 
 <% @links.each do |link| %>
-<p><%= link.title%> | <a href="<%= link.url %>"><%= link.url %></a> | <%= link_to('destroy', link_path(link), method: :delete) %> | <%= link_to('edit', edit_link_path(link)) %></p>
+<p><%= link.title%> |
+  <a href="<%= link.url %>"><%= link.url %></a>
+
+  <% if current_user == link.user %>
+  | <%= link_to('destroy', link_path(link), method: :delete) %> |
+  <%= link_to('edit', edit_link_path(link)) %>
+  <% end %>
+
+</p>
 <% end %>

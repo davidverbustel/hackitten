@@ -2,6 +2,7 @@ class LinksController < ApplicationController
 
   before_action :set_link, only: [:edit, :update, :destroy]
   before_action :set_user, only: [:create]
+  before_action :authenticate_user!, except: [:index]
 
   def index
     @links = Link.all
