@@ -1,5 +1,9 @@
 source 'https://rubygems.org'
 
+ruby '2.2.2'
+gem 'rails_12factor', group: :production
+gem 'puma',           group: :production
+gem "letter_opener", group: :development
 gem 'bootstrap-sass', '~> 3.3.5.1'
 gem 'devise', '~> 3.5.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
