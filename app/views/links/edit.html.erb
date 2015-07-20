@@ -1,10 +1,14 @@
-<h1>Edit link</h1>
-<p><%= link_to('back home', root_path)%></p>
-<%= form_for @link do |f| %>
-  <%= f.label :title %>:
-  <%= f.text_field :title %><br />
-  <%= f.label :url %>:
-  <%= f.text_field :url %><br />
-  <%= f.submit "Update" %>
-<% end %>
+<div class="container">
+
+  <h1>Edit link</h1>
+  <p><%= link_to('back home', root_path)%></p>
+  <%= form_for @link do |f| %>
+    <%= f.label :title %>:
+    <%= f.text_field :title %><br />
+    <%= f.label :url %>:
+    <%= f.text_field :url %><br />
+    <%= f.submit "Update" %>
+  <% end %>
+
+</div>
 

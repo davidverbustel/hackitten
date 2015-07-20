@@ -1,13 +1,17 @@
-<h1>Meow</h1>
+<div class="container">
 
-<% @links.each do |link| %>
-<p><%= link.title%> |
-  <a href="<%= link.url %>"><%= link.url %></a>
+  <h1>Meow</h1>
 
-  <% if current_user == link.user %>
-  | <%= link_to('destroy', link_path(link), method: :delete) %> |
-  <%= link_to('edit', edit_link_path(link)) %>
+  <% @links.each do |link| %>
+  <p><%= link.title%> |
+    <a href="<%= link.url %>"><%= link.url %></a>
+
+    <% if current_user == link.user %>
+    | <%= link_to('destroy', link_path(link), method: :delete) %> |
+    <%= link_to('edit', edit_link_path(link)) %>
+    <% end %>
+
+  </p>
   <% end %>
 
-</p>
-<% end %>
+</div>
