@@ -1,11 +1,28 @@
 <div class="container">
 
-  <h1>Create new link</h1>
-  <p><%= link_to('back home', root_path)%></p>
-  <%= form_for @link, url: {action: "create"} do |f| %>
-    Title: <%= f.text_field :title %><br />
-    Url: <%= f.text_field :url %><br />
-    <%= f.submit "Create" %>
+  <h2 class="text-center">Create new link</h2>
+
+  <%= form_for(@link, url: {action: "create"}, :html => {:class => "form-horizontal"}) do |f| %>
+    <div class="form-group">
+      <%= f.label :title, class: "col-sm-4 control-label" %>
+      <div class="col-sm-4">
+      <%= f.text_field :title, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :url, class: "col-sm-4 control-label" %>
+      <div class="col-sm-4">
+      <%= f.text_field :url, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-4 col-sm-4">
+      <%= f.submit "Submit", class: "btn btn-default" %>
+      or <%= link_to('back home', root_path)%>
+      </div>
+    </div>
   <% end %>
 
 </div>
