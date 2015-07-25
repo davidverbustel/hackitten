@@ -14,8 +14,13 @@ class LinksController < ApplicationController
 
   def create
     @link = @user.links.build(link_params)
-    @link.save
-    redirect_to root_path
+      if @link.save
+        flash[:notice] = "Link was successfully created."
+        redirect_to root_path
+      else
+        flash[:alert] = "Link must have a title and an URL. The URL must start with http://"
+        redirect_to new_link_path
+      end
   end
 
   def edit
@@ -32,17 +37,18 @@ class LinksController < ApplicationController
   end
 
   private
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def link_params
+      params.require(:link).permit(:title, :url)
+    end
 
-  def link_params
-    params.require(:link).permit(:title, :url)
-  end
+    # Use callbacks to share common setup or constraints between actions.
+    def set_link
+      @link = Link.find(params[:id])
+    end
 
-  def set_link
-    @link = Link.find(params[:id])
-  end
-
-  def set_user
-    @user = current_user
-  end
+    def set_user
+      @user = current_user
+    end
 
 end
