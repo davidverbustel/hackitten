@@ -27,12 +27,18 @@ class LinksController < ApplicationController
   end
 
   def update
-    @link.update(link_params)
-    redirect_to root_path
+    if @link.update(link_params)
+      flash[:notice] = "Link was successfully updated."
+      redirect_to root_path
+    else
+      flash[:alert] = "Link must have a title and an URL. The URL must start with http://"
+      redirect_to edit_link_path
+    end
   end
 
   def destroy
     @link.destroy
+    flash[:notice] = "Link was successfully deleted."
     redirect_to root_path
   end
 
