@@ -1,7 +1,7 @@
 class LinksController < ApplicationController
 
-  before_action :set_link, only: [:edit, :update, :destroy]
-  before_action :set_user, only: [:create]
+  before_action :set_link, only: [:edit, :update, :destroy, :upvote, :downvote]
+  before_action :set_user, only: [:create, :upvote, :downvote]
   before_action :authenticate_user!, except: [:index]
 
   def index
@@ -42,6 +42,16 @@ class LinksController < ApplicationController
     redirect_to root_path
   end
 
+  def upvote
+    @link.liked_by @user
+    redirect_to_back_or_default
+  end
+
+  def downvote
+    @link.downvote_from @user
+    redirect_to_back_or_default
+  end
+
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def link_params
@@ -55,6 +65,18 @@ class LinksController < ApplicationController
 
     def set_user
       @user = current_user
+    end
+
+    # if your user user cannot access a resource in the application because :back
+    # depends on the request header variable HTTP_REFERER, this might be
+    # the case if the user is for example trying to access the resource with
+    # a direct link (e.g. a bookmark or a link from an email). Then use this
+    def redirect_to_back_or_default(default = root_url)
+      if request.env["HTTP_REFERER"].present? and request.env["HTTP_REFERER"] != request.env["REQUEST_URI"]
+        redirect_to :back
+      else
+        redirect_to default
+      end
     end
 
 end
