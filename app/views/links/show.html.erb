@@ -1,0 +1,35 @@
+<div class="container">
+(<%= link_to('back home', root_path)%>)
+  <h2><%= @link.title %></h2>
+  <p>Submitted about <%= time_ago_in_words(@link.created_at) %> by <%= @link.user.email %></p>
+  <p>Visit link <a href="<%= @link.url %>"><%= @link.url %></a></p>
+  <p><%= @link.comments.count %> Comments</p>
+  <p>
+    <% if current_user == @link.user %>
+      <%= link_to('destroy', link_path(@link), method: :delete) %> |
+      <%= link_to('edit', edit_link_path(@link)) %> |
+    <% end %>
+    <%= link_to("Upvote", like_link_path(@link), method: :put) %> (<%= @link.get_upvotes.size %>) |
+    <%= link_to("Downvote", dislike_link_path(@link), method: :put) %> (<%= @link.get_downvotes.size %>)
+  </p>
+  <p>
+    <% @link.comments.each do |comment| %>
+    <p><%= comment.body %> | <small>Submitted <strong><%= time_ago_in_words(comment.created_at) %> ago</strong> by <%= comment.user.email %></small> |
+      <% if current_user == @link.user %>
+        <%= link_to('destroy', comment_path(comment), method: :delete) %>
+      <% end %>
+    </p>
+    <% end %>
+  </p>
+
+  <%= simple_form_for [@link, Comment.new]  do |f| %>
+    <div class="field">
+      <%= f.text_area :body, class: "form-control" %>
+    </div>
+    <br>
+    <%= f.submit "Add Comment", class: "btn btn-primary" %>
+  <% end %>
+
+</div>
+
+

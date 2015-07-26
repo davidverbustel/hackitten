@@ -1,17 +1,32 @@
 class LinksController < ApplicationController
 
-  before_action :set_link, only: [:edit, :update, :destroy, :upvote, :downvote]
+  before_action :set_link, only: [:show, :edit, :update, :destroy, :upvote, :downvote]
   before_action :set_user, only: [:create, :upvote, :downvote]
-  before_action :authenticate_user!, except: [:index]
+  before_action :authenticate_user!, except: [:index, :show]
 
   def index
     @links = Link.all
+  end
+
+  def show
   end
 
   def new
     @link = Link.new
   end
 
+  # save return either true or false; Create will return the model regardless
+  # of whether the object was saved or not.
+  # If you use create with branching logic you are at risk of silent failures
+  # which is not the case if you use new + save.
+  # create! doesn't suffer from the same issue as it raises and exception if
+  # the record is invalid.
+  # (.save! throws an error if saving fails)
+
+  # same with .build; we still need to use .save
+  # otherwise .create can be used w/out .save
+  # .create! does the same as .create but raises ActiveRecord::RecordInvalid
+  # if the record is invalid.
   def create
     @link = @user.links.build(link_params)
       if @link.save
@@ -29,7 +44,7 @@ class LinksController < ApplicationController
   def update
     if @link.update(link_params)
       flash[:notice] = "Link was successfully updated."
-      redirect_to root_path
+      redirect_to link_path
     else
       flash[:alert] = "Link must have a title and an URL. The URL must start with http://"
       redirect_to edit_link_path

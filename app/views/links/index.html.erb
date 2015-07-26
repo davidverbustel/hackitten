@@ -1,9 +1,12 @@
 <div class="container">
 
-  <h1>Meow</h1>
+  <h1>Meoooowelcome</h1>
+  <h2>Here the latest cute furry animals:</h2>
+
+  <hr>
 
   <% @links.each do |link| %>
-    <h2><%= link.title%></h2>
+    <h3><%= link_to link.title, link %></h3>
     <p>Submitted about <%= time_ago_in_words(link.created_at) %> by <%= link.user.email %></p>
     <p>Visit link <a href="<%= link.url %>"><%= link.url %></a></p>
     <p>
@@ -17,3 +20,5 @@
   <% end %>
 
 </div>
+
+
