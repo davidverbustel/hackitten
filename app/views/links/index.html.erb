@@ -1,24 +1,32 @@
 <div class="container">
 
-  <h1>Meoooowelcome</h1>
-  <h2>Here the latest cute furry animals:</h2>
+  <h1>Purr... here the latest cute furry animals</h1>
 
   <hr>
 
   <% @links.each do |link| %>
-    <h3><%= link_to link.title, link %></h3>
-    <p>Submitted about <%= time_ago_in_words(link.created_at) %> by <%= link.user.email %></p>
-    <p>Visit link <a href="<%= link.url %>"><%= link.url %></a></p>
-    <p>
-      <% if current_user == link.user %>
-        <%= link_to('destroy', link_path(link), method: :delete) %> |
-        <%= link_to('edit', edit_link_path(link)) %> |
+    <h2>
+      <%= link_to link.title, link %><br>
+      <small class="author">Submitted <%= time_ago_in_words(link.created_at) %> by <%= link.user.name %></small>
+    </h2>
+
+    <div class="btn-group">
+      <a class="btn btn-default btn-sm" href="<%= link.url %>">Visit Link</a>
+      <%= link_to link_path(link), class: "btn btn-default btn-sm" do %>
+        <%= link.comments.count %> comments
       <% end %>
-      <%= link_to("Upvote", like_link_path(link), method: :put) %> (<%= link.get_upvotes.size %>) |
-      <%= link_to("Downvote", dislike_link_path(link), method: :put) %> (<%= link.get_downvotes.size %>)
-    </p>
+      <% if current_user == link.user %>
+        <%= link_to('Delete', link_path(link), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default btn-sm") %>
+        <%= link_to('edit', edit_link_path(link), class: "btn btn-default btn-sm") %>
+      <% end %>
+      <%= link_to like_link_path(link), method: :put, class: "btn btn-default btn-sm" do %>
+        <span class="glyphicon glyphicon-chevron-up"></span> Upvote <%= link.get_upvotes.size %>
+      <% end %>
+      <%= link_to dislike_link_path(link), method: :put, class: "btn btn-default btn-sm" do %>
+        <span class="glyphicon glyphicon-chevron-down"> Downvote <%= link.get_downvotes.size %>
+      <% end %>
+    </div>
+
   <% end %>
 
 </div>
-
-
