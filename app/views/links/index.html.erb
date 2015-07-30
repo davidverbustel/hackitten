@@ -13,7 +13,7 @@
     <div class="btn-group">
       <a class="btn btn-default btn-sm" href="<%= link.url %>">Visit Link</a>
       <%= link_to link_path(link), class: "btn btn-default btn-sm" do %>
-        <%= link.comments.count %> comments
+        <%= pluralize_comment(link.comments.count, "comment") %>
       <% end %>
       <% if current_user == link.user %>
         <%= link_to('Delete', link_path(link), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default btn-sm") %>
