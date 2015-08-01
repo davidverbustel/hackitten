@@ -5,10 +5,19 @@
   <hr>
 
   <% @links.each do |link| %>
-    <h2>
-      <%= link_to link.title, link %><br>
-      <small class="author">Submitted <%= time_ago_in_words(link.created_at) %> by <%= link.user.name %></small>
-    </h2>
+    <div class="media">
+      <div class="media-left">
+        <a href="<%= link_path(link) %>">
+          <%= thumbnail(link.url) %>
+        </a>
+      </div>
+      <div class="media-body">
+        <h2 class="media-heading">
+        <%= link_to link.title, link %><br>
+        <small class="author">Submitted <%= time_ago_in_words(link.created_at) %> by <%= link.user.name %></small>
+        </h2>
+      </div>
+    </div>
 
     <div class="btn-group">
       <a class="btn btn-default btn-sm" href="<%= link.url %>">Visit Link</a>
