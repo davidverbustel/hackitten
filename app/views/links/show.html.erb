@@ -4,12 +4,13 @@
   <div class="row">
     <div class="col-md-8">
 
-      <h2>
-        <%= @link.title %><br />
+      <h2><%= @link.title %></h2>
+      <h3><%= title(@link.url) %><br />
         <small class="author">Submitted about <%= time_ago_in_words(@link.created_at) %> by <%= @link.user.email %></small>
-      </h2>
+      </h3>
 
       <%= display(@link.url) %>
+
 
       <div class="btn-group">
         <a class="btn btn-default btn-sm" href="<%= @link.url %>">Visit Link</a>
@@ -59,4 +60,14 @@
 
 </div>
 
+
+<% content_for :widthurl do %>
+  <script type="text/javascript">
+    $("iframe").each(
+        function(index, elem) {
+            elem.setAttribute("width","100%");
+        }
+    );
+  </script>
+<% end %>
 
